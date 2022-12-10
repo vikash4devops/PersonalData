@@ -1,0 +1,16 @@
+version: '3'
+services:
+        ashish-webcont1:
+                image: "nginx:latest"
+                ports: 
+                      - "90:80"
+
+        pawan-jenkins:
+                image: "jenkinsci/jenkins"
+                ports:
+                      - "8080:8080"
+
+        Kani-webcon1:
+                image: "iccpinfotech/omikaweb"
+                ports:
+                      - "100:80"
