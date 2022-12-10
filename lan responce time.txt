@@ -1,0 +1,47 @@
+Function ping(strip)
+Dim objshell, boolcode
+Set objshell = CreateObject("Wscript.Shell")
+boolcode = objshell.Run("ping -n 1 -w 1000 " & strip, 0, True)
+If boolcode = 0 Then
+    ping = True
+Else
+    ping = False
+End If
+End Function
+
+Sub PingSystem()
+Dim strip As String
+
+For introw = 3 To ActiveSheet.Cells(65536, 3).End(xlUp).Row
+    strip = ActiveSheet.Cells(introw, 3).Value
+    If ping(strip) = True Then
+        ActiveSheet.Cells(introw, 4).Interior.ColorIndex = 0
+        ActiveSheet.Cells(introw, 4).Font.Color = RGB(0, 0, 0)
+        ActiveSheet.Cells(introw, 4).Value = "Online"
+        ActiveSheet.Cells(introw, 5).Value = rsp_time(strip)
+        Sheets("DATA").Cells(introw, 1).Value = 0
+        ActiveSheet.Cells(introw, 4).Font.Color = RGB(0, 200, 0)
+    Else
+        ActiveSheet.Cells(introw, 4).Interior.ColorIndex = 0
+        ActiveSheet.Cells(introw, 4).Font.Color = RGB(200, 0, 0)
+        x = Sheets("DATA").Cells(introw, 1).Value
+        ActiveSheet.Cells(introw, 4).Value = "Offline"
+        If x <> 1 Then
+            ActiveSheet.Cells(introw, 6).Value = Now()
+        End If
+        ActiveSheet.Cells(introw, 5).Value = ""
+        Sheets("DATA").Cells(introw, 1).Value = 1
+        ActiveSheet.Cells(introw, 4).Interior.ColorIndex = 6
+    End If
+Next
+Application.OnTime DateAdd("s", 3, Now), "PingSystem"
+End Sub
+
+Function rsp_time(target)
+Set wmi = GetObject("winmgmts://./root/cimv2")
+
+qry = "SELECT * FROM Win32_PingStatus WHERE address='" & target & "'"
+For Each pingStatus In wmi.ExecQuery(qry)
+    rsp_time = pingStatus.ResponseTime
+Next
+End Function
