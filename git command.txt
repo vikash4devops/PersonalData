@@ -1,0 +1,41 @@
+git add .           to send working directory to staging area
+
+git commit -m "commit tag"   after staging area to send local repo
+
+
+
+git log --oneline   to show git commit
+
+git branch          to show branch
+
+git branch "branchname"    to create new branch
+git checkout "branchname"    to switch new branch branch
+git branch -d "branch name"   to delete branch
+
+git merge "branch name"       to merge branch
+git stash                     to stashing file temporary
+git stash list                 to show all file in stashing 
+
+git apply stash@0               to restore stashing file
+
+git stash clear                 to delete file to stash area
+
+git reset filename              to return file on staging area to working directory
+
+git reset .                     to reset stating area
+
+git reset --hard                to delete file staging area and working directory
+
+git revert " full commitid"            to revert after commit to previous commit
+
+git clean -n                  to delete all file from working directory
+
+git clean -f                  to delete forcefully from working directory
+
+git tag -a "tagname" -m " commit comment" "commit id"       to tag commit id to name
+
+git tag                       to show all tag name
+
+git tag -d "tag name"          to delete tag
+
+
