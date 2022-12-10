@@ -1,0 +1,12 @@
+--- # CREATE MYLTIPLE USERS
+- hosts: hr
+  user: iccpuser
+  become: yes
+  connection: ssh
+
+  tasks:
+          - name: add list of users
+            user: name="{{item}}" state=present
+            with_items:
+                    - deepali
+                    - ashish

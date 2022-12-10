@@ -1,0 +1,6 @@
+--- # collect hr unit system informatiom
+- hosts: hr
+  user: iccpuser
+  become: yes
+  connection: ssh
+  gather_facts: yes

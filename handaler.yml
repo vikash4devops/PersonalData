@@ -1,0 +1,14 @@
+--- # add variables
+- hosts: hr
+  user: iccpuser
+  become: yes
+  connection: ssh
+
+  tasks:
+          - name: install HTTPD Service
+            action: yum name=httpd state=installed
+            notify: restart httpd
+
+  handlers:
+          - name: restart httpd
+            action: service name=httpd state=restarted

@@ -1,0 +1,9 @@
+--- # install httpd in hr unit
+- hosts: hr[0]
+  user: iccpuser
+  become: yes
+  connection: ssh
+
+  tasks:
+          - name: install httpd package
+            action: yum name=httpd state=installed

@@ -1,0 +1,16 @@
+--- # add variables
+- hosts: hr
+  user: iccpuser
+  become: yes
+  connection: ssh
+
+
+  vars:
+          pkgname: docker
+
+
+
+  tasks:
+          - name: install httpd
+            action: yum name="{{pkgname}}" state=installed
+

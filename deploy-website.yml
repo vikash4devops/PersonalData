@@ -1,0 +1,61 @@
+--- # install websit in hr server
+  - name: playbook1
+    hosts: hr[0]
+    user: iccpuser
+    become: yes
+    connection: ssh
+    tasks:
+        - name: httpd
+          yum:
+            name: httpd
+            state: present
+
+        - name: httpd
+          yum:
+            name: unzip
+            state: present
+
+  - name: playbook2
+    hosts: hr[0]
+    user: iccpuser
+    become: yes
+    connection: ssh
+    tasks:
+        - name: httpd
+          service:
+             name: httpd
+             state: started
+
+  - name: playbook3
+    hosts: hr[0]
+    user: iccpuser
+    become: yes
+    connection: ssh
+    tasks:
+       - name: Download foo.conf
+         get_url:
+            url: https://www.free-css.com/assets/files/free-css-templates/download/page266/nolo.zip
+            dest: /home/iccpuser/
+
+  - name: playbook4
+    hosts: hr[0]
+    user: iccpuser
+    become: yes
+    connection: ssh
+    tasks:
+       - name: Extract foo.tgz into /var/lib/foo
+         ansible.builtin.unarchive:
+             src: nolo.zip
+             dest: /var/www/html/
+             remote_src: yes
+
+  - name: plyabook5
+    hosts: hr[0]
+    user: iccpuser
+    become: yes
+    connection: ssh
+    tasks:
+       - copy:
+             src: /var/www/html/nolo/
+             dest: /var/www/html/
+             remote_src: yes
