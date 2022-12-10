@@ -1,0 +1,61 @@
+--- # my project1
+  - name: playbook1
+    hosts: sales
+    user: iccpuser
+    become: yes
+    connection: ssh
+    tasks:
+        - name: httpd
+          yum:
+            name: httpd
+            state: present
+
+        - name: httpd
+          yum:
+            name: unzip
+            state: present
+
+  - name: playbook2
+    hosts: sales
+    user: iccpuser
+    become: yes
+    connection: ssh
+    tasks:
+        - name: httpd
+          service:
+             name: httpd
+             state: started
+
+  - name: playbook3
+    hosts: sales
+    user: iccpuser
+    become: yes
+    connection: ssh
+    tasks:
+       - name: Download foo.conf
+         get_url:
+            url: https://www.free-css.com/assets/files/free-css-templates/download/page266/nolo.zip
+            dest: /home/iccpuser/
+
+  - name: playbook4
+    hosts: sales
+    user: iccpuser
+    become: yes
+    connection: ssh
+    tasks:
+       - name: Extract foo.tgz into /var/lib/foo
+         ansible.builtin.unarchive:
+             src: nolo.zip
+             dest: /var/www/html/
+             remote_src: yes
+
+  - name: plyabook5
+    hosts: sales
+    user: iccpuser
+    become: yes
+    connection: ssh
+    tasks:
+       - copy:
+             src: /var/www/html/nolo/
+             dest: /var/www/html/
+             remote_src: yes
